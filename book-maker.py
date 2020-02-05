@@ -96,7 +96,14 @@ def explore_tree(args, leela, entries, board, moves, visit_threshold):
         if visits < visit_threshold:
             continue
         sub_board = board.copy()
-        assert (sub_board.is_legal(move))
+        # Castling / legal check is not needed because leela's output moves are all legal
+        # Python chess can take either castling notation
+        # Leela may output 'a1a1' when position is terminal
+        # if not (sub_board.is_legal(move)):
+            # if sub_board.is_castling(move):
+                # continue
+            # else:
+                # raise ValueError('Got illegal move {}'.format(move))
         sub_board.push(move)
         explore_tree(args, leela, entries, sub_board, moves + [move], visit_threshold)
 
