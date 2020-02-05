@@ -91,10 +91,12 @@ def explore_tree(args, leela, entries, board, moves, visit_threshold):
     best_move = max(children, key=children.__getitem__)
     if args.print_tree:
         print(indent + "%s -> %s" % (board.fen(), best_move))
-    entries.append(make_entry(board, best_move, weight=min(0xffff, children[best_move] // 256)))
+    
+    total_visits = sum([visits for visits in children.values()])
     for (move, visits) in children.items():
         if visits < visit_threshold:
             continue
+        entries.append(make_entry(board, move, weight=(65535 * visits // total_visits)))
         sub_board = board.copy()
         # Castling / legal check is not needed because leela's output moves are all legal
         # Python chess can take either castling notation
