@@ -11,13 +11,6 @@ def move_to_polyglot_int(board, move):
     # Polyglot encodes castling moves with the from_square being where the king started
     # and the to_square being where the rook started, instead of the UCI standard of the
     # to_square being where the king ends up. Patch up this encoding.
-    if board.is_castling(move):
-        to_square = {
-            chess.G1: chess.H1,
-            chess.C1: chess.A1,
-            chess.G8: chess.H8,
-            chess.C8: chess.A8,
-        }[to_square]
     promotion = {
         None: 0,
         chess.KNIGHT: 1,
